@@ -27,10 +27,7 @@ export interface TabsProps {
   style?: React.CSSProperties;
   prefixCls?: string;
   className?: string;
-  animated?: boolean | {
-    inkBar: boolean;
-    tabPane: boolean;
-  };
+  animated?: boolean | { inkBar: boolean; tabPane: boolean; };
 }
 
 // Tabs
@@ -102,10 +99,10 @@ export default class Tabs extends React.Component<TabsProps, any> {
     } = this.props;
 
     let {inkBarAnimated, tabPaneAnimated} = typeof animated === 'object' ? {
-        inkBarAnimated: !!animated.inkBar, tabPaneAnimated: !!animated.tabPane,
-      } : {
-        inkBarAnimated: !!animated, tabPaneAnimated: !!animated,
-      };
+      inkBarAnimated: animated.inkBar, tabPaneAnimated: animated.tabPane,
+    } : {
+      inkBarAnimated: animated, tabPaneAnimated: animated,
+    };
 
     warning(
       !(type.indexOf('card') >= 0 && size === 'small'),
