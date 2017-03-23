@@ -27,7 +27,7 @@ export interface TabsProps {
   style?: React.CSSProperties;
   prefixCls?: string;
   className?: string;
-  animated?: boolean;
+  animated?: any;
 }
 
 // Tabs
@@ -97,6 +97,13 @@ export default class Tabs extends React.Component<TabsProps, any> {
       onTabClick,
       animated,
     } = this.props;
+
+    let {inkBarAnimated, tabPaneAnimated} = typeof animated === 'object' ? {
+        inkBarAnimated: !!animated.inkBar, tabPaneAnimated: !!animated.tabPane,
+      } : {
+        inkBarAnimated: !!animated, tabPaneAnimated: !!animated,
+      };
+
     warning(
       !(type.indexOf('card') >= 0 && size === 'small'),
       'Tabs[type=card|editable-card] doesn\'t have small size, it\'s by designed.'
@@ -150,6 +157,7 @@ export default class Tabs extends React.Component<TabsProps, any> {
 
     const renderTabBar = () => (
       <ScrollableInkTabBar
+        inkBarAnimated={inkBarAnimated}
         extraContent={tabBarExtraContent}
         onTabClick={onTabClick}
         style={tabBarStyle}
@@ -162,7 +170,7 @@ export default class Tabs extends React.Component<TabsProps, any> {
         className={cls}
         tabBarPosition={tabPosition}
         renderTabBar={renderTabBar}
-        renderTabContent={() => <TabContent animated={animated} animatedWithMargin />}
+        renderTabContent={() => <TabContent animated={tabPaneAnimated} animatedWithMargin />}
         onChange={this.handleChange}
       >
         {childrenWithClose || children}
